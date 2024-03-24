@@ -9,7 +9,7 @@ const Users = db.define('Users',{
         autoIncrement : true,
     },
     UserName : {
-        type:Sequelize.STRING,
+        type:Sequelize.STRING,  
         allowNull: false,
     },
     UserEmail : {

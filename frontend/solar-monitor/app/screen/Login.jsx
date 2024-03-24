@@ -1,13 +1,41 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
+import React, { useState }  from 'react'
 import Colors from '../../assets/Colors'
 import { Input } from '@rneui/themed';
 import { AntDesign } from '@expo/vector-icons';
-// import { Link, router } from 'expo-router';
-import SignIn from './SignIn'
-import { useNavigation  } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios'
 
 export default function Login(props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+        const response = await axios.post('http://192.168.0.101:9000/api/login', {
+            UserEmail: email,
+            UserPassword: password
+        });
+        const token = response.data.token;
+        console.log(response.data);
+        await AsyncStorage.setItem('token', token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        props.navigation.navigate('Home');
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data);
+            Alert.alert("Login Failed", error.response.data.message || "An error occurred during login.");
+        } else if (error.request) {
+            console.log(error.request);
+            Alert.alert("Login Failed", "No response from server");
+        } else {
+            console.log('Error', error.message);
+            Alert.alert("Login Error", error.message);
+        }
+    }
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -24,14 +52,16 @@ export default function Login(props) {
         <Input
           placeholder='Enter your email'
           style={styles.input}
+          onChangeText={setEmail} 
         />
         <Text style={styles.fontLabel}>Password</Text>
         <Input
           placeholder='Enter your password'
           secureTextEntry={true}
+          onChangeText={setPassword} 
           style={styles.input}
         />
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin} >
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.googleButton}>

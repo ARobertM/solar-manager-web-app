@@ -8,6 +8,7 @@ import { Input } from '@rneui/themed';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './app/screen/SignIn';
+import Home from './app/screen/Home';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,6 +36,7 @@ export default function App() {
       <Stack.Navigator initialRouteName='LogIn'>
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='SignIn' component={SignIn} options={{ headerShown: false }} />
+        <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
     </View>

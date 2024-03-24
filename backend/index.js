@@ -4,7 +4,6 @@ import env from 'dotenv';
 import DB_Init from './entities/DB_init.js';
 import createDbRouter from './routes/createDbRoute.js';
 import userRouter from './routes/UserRouter.js';
-import loginRouter from './routes/loginRouter.js';
 
 
 let app = express();
@@ -22,7 +21,6 @@ app.use(express.urlencoded({
 DB_Init();
 app.use('/api',createDbRouter);
 app.use('/api',userRouter);
-app.use('/api',loginRouter);
 
 let port = process.env.PORT || 9000;
 app.listen(port);

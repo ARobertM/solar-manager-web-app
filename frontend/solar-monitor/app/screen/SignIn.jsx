@@ -1,10 +1,37 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
+import React, {useState}  from 'react'
 import Colors from '../../assets/Colors'
 import { Input } from '@rneui/themed';
 import { AntDesign } from '@expo/vector-icons';
+import axios from 'axios'
 
 export default function SignIn(props) {
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignUp = () => {
+    if (!email || !password || !username) {
+      Alert.alert("Error", "Please fill in all fields.");
+      return;
+    }
+    axios.post('http://192.168.0.101:9000/api/register', {
+      UserName: username,
+      UserEmail: email,
+      UserPassword: password,
+    })
+    .then((response) => {
+      Alert.alert("Success", "You have been registered successfully.");
+      props.navigation.navigate('Login');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      Alert.alert("Registration Failed", "An error occurred during registration.");
+    });
+  };
+
+
   return (
     <View style={styles.container}>
       <Image
@@ -20,19 +47,22 @@ export default function SignIn(props) {
         <Input
           placeholder='Enter your username'
           style={styles.input}
+          onChangeText={setUsername}
         />
         <Text style={styles.fontLabel}>Email</Text>
         <Input
           placeholder='Enter your email'
           style={styles.input}
+          onChangeText={setEmail}
         />
         <Text style={styles.fontLabel}>Password</Text>
         <Input
           placeholder='Enter your password'
           secureTextEntry={true}
           style={styles.input}
+          onChangeText={setPassword}
         />
-        <TouchableOpacity style={styles.signUpButton}>
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         
@@ -42,7 +72,7 @@ export default function SignIn(props) {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.createAccount} onPress= {() => props.navigation.navigate('Login')}>
-        <Text style={styles.createAccountText}>Create one if you don't have an account</Text>
+        <Text style={styles.createAccountText}>If you already have an account, just login</Text>
         </TouchableOpacity>
 
       </View>
