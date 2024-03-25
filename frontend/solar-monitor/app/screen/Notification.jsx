@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
 export default function Notification() {
@@ -9,4 +9,4 @@ export default function Notification() {
   )
 }
 
-const styles = StyleSheet.create({first})
+const styles = StyleSheet.create({})

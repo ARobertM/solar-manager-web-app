@@ -44,8 +44,11 @@ async function authenticateUser(UserEmail, UserPassword) {
     return { success: true, token };
 }
 
+async function authenticateToken(){}
+
 export {
     createUser,
     findUserByEmail,
-    authenticateUser
+    authenticateUser,
+    authenticateToken
 };

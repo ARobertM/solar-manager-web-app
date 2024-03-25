@@ -12,6 +12,8 @@ export default function Login(props) {
 
   const handleLogin = async () => {
     try {
+      //pentru testare emulator : localhost+port
+      //pentru testare android fizic : ip+port: 192.168.0.101:9000
         const response = await axios.post('http://192.168.0.101:9000/api/login', {
             UserEmail: email,
             UserPassword: password
@@ -20,7 +22,7 @@ export default function Login(props) {
         console.log(response.data);
         await AsyncStorage.setItem('token', token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        props.navigation.navigate('Home');
+        props.navigation.navigate('Tabnavigation');
     } catch (error) {
         if (error.response) {
             console.log(error.response.data);

@@ -16,7 +16,7 @@ export default function SignIn(props) {
       Alert.alert("Error", "Please fill in all fields.");
       return;
     }
-    axios.post('http://192.168.0.101:9000/api/register', {
+    axios.post('http://localhost:9000/api/register', {
       UserName: username,
       UserEmail: email,
       UserPassword: password,

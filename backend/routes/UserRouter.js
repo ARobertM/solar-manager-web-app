@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, authenticateUser } from '../dataAccess/UsersDAO.js';
+import { createUser, authenticateUser, authenticateToken } from '../dataAccess/UsersDAO.js';
 
 let userRouter = express.Router();
 
@@ -15,6 +15,15 @@ userRouter.post('/login', async (req, res) => {
     if (!success) return res.status(401).json({ error });
     return res.status(200).json({ token });
 });
+
+userRouter.get('/user', authenticateToken, async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        res.json({ UserName: user.name, UserEmail: user.email });
+      } catch (error) {
+        res.status(500).json({ message: "Error fetching user information" });
+      }
+})
 
 
 export default userRouter;

@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './app/screen/SignIn';
 import Home from './app/screen/Home';
+import Tabnavigation from './app/navigations/Tabnavigation';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,10 +34,11 @@ export default function App() {
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='LogIn'>
+      <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='SignIn' component={SignIn} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name='Tabnavigation' component={Tabnavigation} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
     </View>
