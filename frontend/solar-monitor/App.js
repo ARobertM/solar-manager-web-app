@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './app/screen/SignIn';
 import Home from './app/screen/Home';
 import Tabnavigation from './app/navigations/Tabnavigation';
+import AddInverter from './app/screen/AddInverter';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,6 +40,7 @@ export default function App() {
         <Stack.Screen name='SignIn' component={SignIn} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='Tabnavigation' component={Tabnavigation} options={{ headerShown: false }} />
+        <Stack.Screen name='AddInverter'component={AddInverter}options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
     </View>

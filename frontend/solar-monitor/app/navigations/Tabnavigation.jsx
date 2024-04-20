@@ -21,11 +21,11 @@ export default function Tabnavigation() {
       headerShown: false,
       tabBarStyle: {
         height: 60,
-        bottom: 16,
+        bottom: 26,
         position: 'absolute',
-        borderRadius: 10,
-        left: 16,
-        right: 16
+        borderRadius: 40,
+        left: 36,
+        right: 36
       }
     }}>
 

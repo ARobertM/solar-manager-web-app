@@ -14,6 +14,7 @@ export default function Login(props) {
     try {
       //pentru testare emulator : localhost+port
       //pentru testare android fizic : ip+port: 192.168.0.101:9000
+      //TO:DO de rezolvat faza cu IP-ul
         const response = await axios.post('http://192.168.0.101:9000/api/login', {
             UserEmail: email,
             UserPassword: password

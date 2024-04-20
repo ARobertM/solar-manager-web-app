@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import Colors from '../../assets/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import AddInverterBtn from '../components/AddInverterBtn';
 
 
-export default function Home() {
+export default function Home(props) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <LinearGradient
@@ -13,16 +14,18 @@ export default function Home() {
         end={{ x: 0, y: 0 }}
         style={styles.background}
         />
-
-      
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.container}>
             <Text style={styles.welcomeText}>Welcome to,</Text>
             <Text style={styles.solisText}>Solis</Text>
-            <Text style={styles.descriptionText}>
+            <Text style={styles.descriptionText}></Text>
 
-            </Text>
+            <AddInverterBtn></AddInverterBtn>
+
+
           </View>
+          
+          
         </ScrollView>
    
 
@@ -31,12 +34,15 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  addInverter:{
+    paddingLeft : 20,
+  },
   safeArea: {
     marginTop: 30,
     flex: 1,
   },
   background: {
-    position: 'absolute', // Poziționează gradientul absolut pentru a umple întregul ecran
+    position: 'absolute', 
     left: 0,
     right: 0,
     top: 0,
