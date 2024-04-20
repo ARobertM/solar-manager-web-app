@@ -1,6 +1,11 @@
 import mysql from "mysql2/promise";
 import env from 'dotenv';
 
+import Users from "./Users.js";
+import Inverter from "./Inverter.js";
+import BatteryM from "./BatteryM.js";
+import SolarPanelM from "./SolarPanelM.js";
+
 env.config();
 
 function create_db(){
@@ -19,14 +24,15 @@ function create_db(){
     })
 }
 
-// function FK_Config(){
-//     // 1-n , n-n
-// }
+function FK_Config(){
+    Users.hasMany(Inverter, { as:'Inverter',foreignKey: 'UserId'});
+    Inverter.hasMany(BatteryM, {as:'BatteryM',foreignKey: 'InverterId'});
+    Inverter.hasMany(SolarPanelM, {as:'SolarPanelM', foreignKey: 'InverterId'});
+}
 
 function DB_Init(){
     create_db();
-    // FK_Config();
-    
+    FK_Config();
 }
 
 export default DB_Init;

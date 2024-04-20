@@ -1,5 +1,4 @@
-import Users from "../entities/Users.js"; // Presupunem că acesta este importul corect pentru modelul Sequelize
-import bcrypt from 'bcrypt';
+import Users from "../entities/Users.js"; // 
 import jwt from 'jsonwebtoken';
 
 const secretKey = 'secret_key'; // În producție, ar trebui să fie o valoare complexă și stocată în siguranță
