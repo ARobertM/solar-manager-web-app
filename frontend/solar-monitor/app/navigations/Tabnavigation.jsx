@@ -15,20 +15,23 @@ import TabBarIcon from '../components/Animations';
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabnavigation(props) {
-  return (
-    <Tab.Navigator screenOptions={{
-      headerShown: false,
-      tabBarStyle: {
-        height: 60,
-        bottom: 26,
-        position: 'absolute',
-        borderRadius: 40,
-        left: 36,
-        right: 36
-      }
-    }}>
+export default function Tabnavigation({ route }) {
+  const { userId } = route.params;
 
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          height: 60,
+          bottom: 26,
+          position: 'absolute',
+          borderRadius: 40,
+          left: 36,
+          right: 36
+        }
+      }}
+    >
       <Tab.Screen
         name="Notification"
         component={Notification}
@@ -40,16 +43,19 @@ export default function Tabnavigation(props) {
           ),
         }}
       />
-      <Tab.Screen name="Home" component={Home}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="home" library={FontAwesome5} focused={focused} />
-          ),
-        }}
-      />
-      <Tab.Screen name="Dashboard" component={Dashboard}
+      <Tab.Screen name="Home"
+      options={{
+        tabBarLabel: 'Home',
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon name="home" library={FontAwesome5} focused={focused} />
+        ),
+      }}>
+        {() => <Home userId={userId} />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="Dashboard"
+        component={Dashboard}
         options={{
           tabBarLabel: 'Dashboard',
           tabBarShowLabel: false,
@@ -58,7 +64,9 @@ export default function Tabnavigation(props) {
           ),
         }}
       />
-      <Tab.Screen name="ProfilePage" component={ProfilePage}
+      <Tab.Screen
+        name="ProfilePage"
+        component={ProfilePage}
         options={{
           tabBarLabel: 'Profile',
           tabBarShowLabel: false,
@@ -68,5 +76,5 @@ export default function Tabnavigation(props) {
         }}
       />
     </Tab.Navigator>
-  )
+  );
 }

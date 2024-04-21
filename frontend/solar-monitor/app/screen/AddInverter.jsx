@@ -4,8 +4,11 @@ import { CameraView, Camera } from "expo-camera/next";
 import Colors from "../../assets/Colors";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+import { useNavigation } from '@react-navigation/native';
 
-export default function AddInverter() {
+export default function AddInverter({ route }) {
+  const navigation = useNavigation();
+  const { userId } = route.params;
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -22,20 +25,19 @@ export default function AddInverter() {
     setScanned(true);
     alert(`QR code with type ${type} and data ${data} has been scanned!`);
     try{
-      const parts = data.split('_');
+      const parts = data.split(' ');
       const id = parts[0];
       const name = parts[1];
       const date = parts[2];
+ 
 
-      const userId = await AsyncStorage.getItem('userId'); 
-      console.log(userId);
-
-      const response = await axios.post('http://192.168.0.5:9000/api/register/inverter', {
-        // "UserId": userId, 
+      const response = await axios.post('http://192.168.0.103:9000/api/register/inverter', {
+        "UserId": userId, 
         "InverterId": id,
         "InverterName": name,
         "InverterDateCreated": date
       });
+      console.log("userId in AddInverter:", userId);
       console.log(response.data);
 
     }catch(error){
@@ -79,7 +81,7 @@ export default function AddInverter() {
       
 
       {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+        navigation.goBack()
       )}
     </View>
   );

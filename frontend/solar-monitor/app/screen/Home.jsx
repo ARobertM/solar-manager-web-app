@@ -5,33 +5,28 @@ import { LinearGradient } from 'expo-linear-gradient';
 import AddInverterBtn from '../components/AddInverterBtn';
 
 
-export default function Home(props) {
+export default function Home({ userId }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <LinearGradient
-        colors={[Colors.YELLOW_LIGHT,Colors.WHITE,Colors.WHITE]}
+        colors={[Colors.YELLOW_LIGHT, Colors.WHITE, Colors.WHITE]}
         start={{ x: 1, y: 1 }}
         end={{ x: 0, y: 0 }}
         style={styles.background}
-        />
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.container}>
-            <Text style={styles.welcomeText}>Welcome to,</Text>
-            <Text style={styles.solisText}>Solis</Text>
-            <Text style={styles.descriptionText}></Text>
+      />
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.container}>
+          <Text style={styles.welcomeText}>Welcome to,</Text>
+          <Text style={styles.solisText}>Solis</Text>
+          <Text style={styles.descriptionText}></Text>
 
-            <AddInverterBtn></AddInverterBtn>
-
-
-          </View>
-          
-          
-        </ScrollView>
-   
-
+          <AddInverterBtn userId={userId} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   addInverter:{

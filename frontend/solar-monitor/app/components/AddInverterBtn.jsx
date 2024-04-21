@@ -5,17 +5,18 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../../assets/Colors';
 import { useNavigation } from '@react-navigation/native';
 
-export default function AddInverterBtn() {
-    const navigation = useNavigation();
+export default function AddInverterBtn({ userId }) {
+  const navigation = useNavigation();
 
-    const handleAddPress = () => {
-        navigation.navigate('AddInverter');
-    };
+  const handleAddPress = () => {
+    console.log("id:",userId)
+    navigation.navigate('AddInverter', { userId: userId });
+  };
 
   return (
     <TouchableOpacity onPress={handleAddPress} style={styles.button}>
       <View style={styles.iconContainer}>
-      <MaterialCommunityIcons name="qrcode-scan" size={60} color={Colors.BLUE}/>
+        <MaterialCommunityIcons name="qrcode-scan" size={60} color={Colors.BLUE} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>Add a new Inverter!</Text>
@@ -24,6 +25,7 @@ export default function AddInverterBtn() {
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   iconContainer:{
