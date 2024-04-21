@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
 import Colors from "../../assets/Colors";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios'
 
 export default function AddInverter() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -16,9 +18,29 @@ export default function AddInverter() {
     getCameraPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    alert(`QR code with type ${type} and data ${data} has been scanned!`);
+    try{
+      const parts = data.split('_');
+      const id = parts[0];
+      const name = parts[1];
+      const date = parts[2];
+
+      const userId = await AsyncStorage.getItem('userId'); 
+      console.log(userId);
+
+      const response = await axios.post('http://192.168.0.5:9000/api/register/inverter', {
+        // "UserId": userId, 
+        "InverterId": id,
+        "InverterName": name,
+        "InverterDateCreated": date
+      });
+      console.log(response.data);
+
+    }catch(error){
+      console.error("Error registering inverter!", error);
+    }
   };
 
   if (hasPermission === null) {

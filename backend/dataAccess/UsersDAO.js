@@ -1,9 +1,9 @@
-import Users from "../entities/Users.js"; // 
+import Users from "../entities/Users.js";
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt'
 
-const secretKey = 'secret_key'; // În producție, ar trebui să fie o valoare complexă și stocată în siguranță
+const secretKey = 'secret_key';
 
-// Crearea unui utilizator nou
 async function createUser({ UserName, UserEmail, UserPassword }) {
     try {
         const hashedPassword = await bcrypt.hash(UserPassword, 10);
@@ -39,11 +39,13 @@ async function authenticateUser(UserEmail, UserPassword) {
     const validPassword = await bcrypt.compare(UserPassword, user.UserPassword);
     if (!validPassword) return { success: false, error: 'Invalid credentials' };
 
-    const token = jwt.sign({ UserId: user.UserId, UserEmail }, secretKey, { expiresIn: '24h' }); 
-    return { success: true, token };
+    const token = jwt.sign({ UserId: user.UserId, UserEmail }, secretKey, { expiresIn: '24h' });
+    return { success: true, userId: user.UserId, token }; // Include userId in the response
 }
 
-async function authenticateToken(){}
+async function authenticateToken() {
+    // Your token authentication logic
+}
 
 export {
     createUser,

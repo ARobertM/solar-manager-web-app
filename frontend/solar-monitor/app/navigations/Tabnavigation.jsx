@@ -15,7 +15,7 @@ import TabBarIcon from '../components/Animations';
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabnavigation() {
+export default function Tabnavigation(props) {
   return (
     <Tab.Navigator screenOptions={{
       headerShown: false,

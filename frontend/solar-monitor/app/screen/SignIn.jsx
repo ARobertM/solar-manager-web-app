@@ -4,6 +4,7 @@ import Colors from '../../assets/Colors'
 import { Input } from '@rneui/themed';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn(props) {
 
@@ -16,7 +17,7 @@ export default function SignIn(props) {
       Alert.alert("Error", "Please fill in all fields.");
       return;
     }
-    axios.post('http://192.168.0.101:9000/api/register', {
+    axios.post('http://192.168.0.5:9000/api/register', {
       UserName: username,
       UserEmail: email,
       UserPassword: password,
