@@ -31,7 +31,7 @@ export default function AddInverter({ route }) {
       const date = parts[2];
  
 
-      const response = await axios.post('http://192.168.0.101:9000/api/register/inverter', {
+      const response = await axios.post('http://192.168.1.5:9000/api/register/inverter', {
         "UserId": userId, 
         "InverterId": id,
         "InverterName": name,

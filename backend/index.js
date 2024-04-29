@@ -6,6 +6,8 @@ import createDbRouter from './routes/createDbRoute.js';
 import userRouter from './routes/UserRouter.js';
 import inverterRouter from './routes/InverterRouter.js';
 import influxRouter from './routes/influxDbRouter.js';
+import batterymRouter from './routes/BatteryRouter.js';
+import solarPanelmRouter from './routes/SolarPanelRouter.js';
 
 
 let app = express();
@@ -31,6 +33,8 @@ app.use('/api',createDbRouter);
 app.use('/api',userRouter);
 app.use('/api',inverterRouter);
 app.use('/api',influxRouter);
+app.use('/api',batterymRouter);
+app.use('/api',solarPanelmRouter);
 
 let port = process.env.PORT || 9000;
 app.listen(port);
