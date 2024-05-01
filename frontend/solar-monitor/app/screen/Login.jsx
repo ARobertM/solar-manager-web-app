@@ -22,6 +22,9 @@ export default function Login(props) {
         const { token, userId } = response.data;
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('user', JSON.stringify(userId)); 
+        await AsyncStorage.setItem('user', JSON.stringify(token)); 
+        console.log(token)
+        console.log(userId)
         // await AsyncStorage.setItem('userId',userId); 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         props.navigation.navigate('Tabnavigation', {userId});

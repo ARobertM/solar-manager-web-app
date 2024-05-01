@@ -1,26 +1,32 @@
 import express from 'express';
-import { queryApi,fluxQuery1,fluxQuery2,lastEntryQueryS,lastEntryQueryB } from '../influxDBClient.js';
+import { queryApi,fluxQuery1,fluxQuery2,lastEntryQueryS,lastEntryQueryB,fluxQueryMeanB } from '../influxDBClient.js';
 
 const influxRouter = express.Router();
 
-influxRouter.get('/influxdata-bat', (req, res) => {
-    const days = 1;
+influxRouter.get('/inverter-data', async (req, res) => {
+  const userId = req.query.userId;
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
 
-    queryApi.queryRows(fluxQuery1(days), {
-      next(row, tableMeta) {
-        const o = tableMeta.toObject(row);
-        console.log(o);
-      },
-      error(error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to retrieve data' });
-      },
-      complete() {
-        console.log('Completed');
-        res.status(200).send('Data retrieved successfully');
-      },
+  try {
+    const inverterData = await Inverter.findOne({
+      where: {
+        UserId: userId
+      }
     });
+
+    if (inverterData) {
+      res.json({ exists: true, inverterData });
+    } else {
+      res.status(404).json({ exists: false, error: 'No inverter found for this user' });
+    }
+  } catch (error) {
+    console.error("Error fetching inverter data:", error);
+    res.status(500).json({ error: 'Failed to retrieve inverter data' });
+  }
 });
+
 
 influxRouter.get('/influxdata-solp', (req, res) => {
   const days = 1;
@@ -102,5 +108,28 @@ influxRouter.get('/influxdata-bat-last', (req, res) => {
     },
   });
 });
+
+influxRouter.get('/influxdata-bat-mean', (req, res) => {
+  const days = 7;
+
+  queryApi.queryRows(fluxQueryMeanB(days), {
+    next(row, tableMeta) {
+      const o = tableMeta.toObject(row);
+      console.log(o);
+      // Aici poți trimite răspunsul cu datele agregate către client
+      res.status(200).json({ mean_batteryVoltage: o._value });
+    },
+    error(error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to retrieve data' });
+    },
+    complete() {
+      console.log('Completed');
+    },
+  });
+});
+
+  
+
 
 export default influxRouter;

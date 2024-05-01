@@ -1,18 +1,19 @@
 import db from "../dbConfig.js";
 import { Sequelize } from "sequelize";
 
-const Inverter = db.define('Inverter',{
-    InverterId:{
+const Inverter = db.define('Inverter', {
+    InverterId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false
     },
-    InverterName:{
+    InverterName: {
         type: Sequelize.STRING,
-        allowNull : false,
+        allowNull: false
     },
-    InverterDateCreated:{
+    InverterDateCreated: {
         type: Sequelize.DATE,
         allowNull: false,
+        defaultValue: Sequelize.NOW
     }
 });
 

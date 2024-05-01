@@ -54,27 +54,16 @@ export default function Tabnavigation({ route }) {
         {() => <Home userId={userId} />}
       </Tab.Screen>
       <Tab.Screen
-        name="Dashboard"
-        component={Dashboard}
-        options={{
-          tabBarLabel: 'Dashboard',
-          tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
+    name="Dashboard"
+    options={{
+        tabBarLabel: 'Dashboard',
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused }) => (
             <TabBarIcon name="monitor-dashboard" library={MaterialCommunityIcons} focused={focused} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ProfilePage"
-        component={ProfilePage}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="profile" library={AntDesign} focused={focused} />
-          ),
-        }}
-      />
+        ),
+    }}>
+    {() => <Dashboard userId={userId} />}
+</Tab.Screen>
     </Tab.Navigator>
   );
 }

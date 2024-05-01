@@ -40,11 +40,11 @@ async function authenticateUser(UserEmail, UserPassword) {
     if (!validPassword) return { success: false, error: 'Invalid credentials' };
 
     const token = jwt.sign({ UserId: user.UserId, UserEmail }, secretKey, { expiresIn: '24h' });
-    return { success: true, userId: user.UserId, token }; // Include userId in the response
+    return { success: true, userId: user.UserId, token }; 
 }
 
 async function authenticateToken() {
-    // Your token authentication logic
+    
 }
 
 export {

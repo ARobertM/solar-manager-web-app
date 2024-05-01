@@ -3,44 +3,47 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from "../../assets/Colors";
 import axios from 'axios';
-import { Feather } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 
-export default function Dashboard() {
+export default function Dashboard({ userId }) {
   const [batteryData, setBatteryData] = useState(null);
   const [solarData, setSolarData] = useState(null);
+  const [inverterData, setInverterData] = useState(null);
 
   useEffect(() => {
-    const fetchBatteryData = async () => {
+    const verifyInverter = async () => {
       try {
-        const responseBat = await axios.get('http://192.168.1.5:9000/api/influxdata-bat-last');
-        setBatteryData(responseBat.data);
+        const res = await axios.get(`http://192.168.1.5:9000/api/inverter-data?userId=${userId}`);
+        if (res.data.length > 0) {
+          console.log('Inverter found, fetching real-time data...');
+          setInverterData(res.data);
+          fetchData(); 
+        } else {
+          console.log('No inverter found for this user.');
+        }
       } catch (error) {
-        console.error("Error fetching battery data:", error);
-        setBatteryData({ error: 'Failed to retrieve battery data' });
+        console.error("Verification failed:", error.response ? error.response.data : error.message);
       }
     };
 
-    const fetchSolarData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.5:9000/api/influxdata-solp-last');
-        setSolarData(response.data);
+        const [batteryRes, solarRes] = await Promise.all([
+          axios.get('http://192.168.1.5:9000/api/influxdata-bat-last'),
+          axios.get('http://192.168.1.5:9000/api/influxdata-solp-last')
+        ]);
+        setBatteryData(batteryRes.data);
+        setSolarData(solarRes.data);
       } catch (error) {
-        console.error("Error fetching solar data:", error);
-        setSolarData({ error: 'Failed to retrieve solar data' });
+        console.error("Error fetching real-time data:", error);
       }
     };
 
-    fetchBatteryData();
-    fetchSolarData();
-    const batteryInterval = setInterval(fetchBatteryData, 10000);
-    const solarInterval = setInterval(fetchSolarData, 10000);
+    verifyInverter();
 
-    return () => {
-      clearInterval(batteryInterval);
-      clearInterval(solarInterval);
-    };
-  }, []);
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  }, [userId]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -57,19 +60,26 @@ export default function Dashboard() {
           <View style={styles.iconWithText}>
             <Feather name="battery-charging" size={34} color={Colors.BLUE} />
             <Text style={styles.batteryInfo}>
-              {batteryData ? ` Battery Voltage: ${batteryData._value} V` : "Loading battery data..."}
+              {batteryData ? `Battery Voltage: ${batteryData._value} V` : "Loading battery data..."}
             </Text>
           </View>
           <View style={styles.iconWithText}>
             <MaterialIcons name="solar-power" size={34} color={Colors.YELLOW_LIGHT} />
             <Text style={styles.solarInfo}>
-              {solarData ? ` Solar Panel Voltage: ${solarData._value} V` : "Loading solar data..."}
+              {solarData ? `Solar Panel Voltage: ${solarData._value} V` : "Loading solar data..."}
             </Text>
           </View>
+          {inverterData && (
+            <Text style={styles.solarInfo}>
+              Inverter: {inverterData[0].InverterName}
+            </Text>
+          )}
         </View>
-        <View style={styles.card}>
-            
-        </View>
+        <Text style={styles.solarInfo2}>Battery Statistics</Text>
+        {/* <View style={styles.card}>
+          <Text>Statistics for the</Text>
+          <Text>Week</Text>
+        </View> */}
       </View>
     </SafeAreaView>
   );
@@ -77,21 +87,28 @@ export default function Dashboard() {
 
 const styles = StyleSheet.create({
   iconWithText: {
-    flexDirection: 'row', // Align icon and text in a row
-    alignItems: 'center', // Center them vertically
-    marginBottom: 10, // Optional: add space between the rows
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   batteryInfo: {
     fontFamily: 'pop-semibold',
     fontSize: 18,
     color: Colors.BLUE,
-    marginLeft: 10, // Add some space between icon and text
+    marginLeft: 10, 
   },
   solarInfo: {
     fontFamily: 'pop-semibold',
     fontSize: 18,
     color: Colors.YELLOW_LIGHT,
-    marginLeft: 10, // Add some space between icon and text
+    marginLeft: 10, 
+  },
+  solarInfo2: {
+    fontFamily: 'pop-semibold',
+    fontSize: 18,
+    color: Colors.YELLOW_LIGHT,
+    marginTop:20,
+    marginLeft: 40, 
   },
   batteryInfo: {
     fontFamily: 'pop-semibold',
@@ -114,6 +131,21 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     flexDirection: 'column',
+    fontFamily: 'pop-regular'
+  },
+  card2: {
+    marginTop: 20,
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     fontFamily: 'pop-regular'
   },
   safeArea: {

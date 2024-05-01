@@ -42,3 +42,12 @@ export const lastEntryQueryB = () => {
             |> limit(n: 1)`;
 };
 
+export const fluxQueryMeanB = (days) => {
+    return `from(bucket: "${bucket}")
+            |> range(start: -${days}d)
+            |> filter(fn: (r) => r["_measurement"] == "energy_data")
+            |> filter(fn: (r) => r["_field"] == "batteryVoltage")
+            |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)
+            |> yield(name: "mean_batteryVoltage")`;  
+};
+
