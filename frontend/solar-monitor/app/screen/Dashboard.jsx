@@ -4,46 +4,59 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Colors from "../../assets/Colors";
 import axios from 'axios';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function Dashboard({ userId }) {
   const [batteryData, setBatteryData] = useState(null);
   const [solarData, setSolarData] = useState(null);
+  const [batteryPerc, setBatteryPerc] = useState(null);
   const [inverterData, setInverterData] = useState(null);
 
   useEffect(() => {
-    const verifyInverter = async () => {
+    const verifyAndFetchData = async () => {
       try {
-        const res = await axios.get(`http://192.168.1.5:9000/api/inverter-data?userId=${userId}`);
-        if (res.data.length > 0) {
+        console.log(userId)
+        console.log('Sending request with userId:', userId);
+        const res = await axios.get(`http://192.168.1.3:9000/api/inverter-data/${userId}`);
+        console.log(res.data)
+        if (res.data) {
           console.log('Inverter found, fetching real-time data...');
-          setInverterData(res.data);
-          fetchData(); 
+          setInverterData(res.data.inverterData);
+          fetchData();
         } else {
           console.log('No inverter found for this user.');
+          setInverterData(null);
         }
       } catch (error) {
         console.error("Verification failed:", error.response ? error.response.data : error.message);
+        setInverterData(null);
       }
     };
 
     const fetchData = async () => {
       try {
-        const [batteryRes, solarRes] = await Promise.all([
-          axios.get('http://192.168.1.5:9000/api/influxdata-bat-last'),
-          axios.get('http://192.168.1.5:9000/api/influxdata-solp-last')
+        const [batteryRes, solarRes, batteryPerc] = await Promise.all([
+          axios.get('http://192.168.1.3:9000/api/influxdata-bat-last'),
+          axios.get('http://192.168.1.3:9000/api/influxdata-solp-last'),
+          axios.get('http://192.168.1.3:9000/api/influxdata-batperc-last')
         ]);
         setBatteryData(batteryRes.data);
         setSolarData(solarRes.data);
+        setBatteryPerc(batteryPerc.data);
       } catch (error) {
         console.error("Error fetching real-time data:", error);
+        setBatteryData(null);
+        setSolarData(null);
+        setBatteryPerc(null);
       }
     };
 
-    verifyInverter();
+    verifyAndFetchData();
 
-    const interval = setInterval(fetchData, 10000);
+    const interval = setInterval(verifyAndFetchData, 10000);
     return () => clearInterval(interval);
   }, [userId]);
+
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -60,32 +73,35 @@ export default function Dashboard({ userId }) {
           <View style={styles.iconWithText}>
             <Feather name="battery-charging" size={34} color={Colors.BLUE} />
             <Text style={styles.batteryInfo}>
-              {batteryData ? `Battery Voltage: ${batteryData._value} V` : "Loading battery data..."}
+              {batteryData ? `  Battery Voltage: ${batteryData._value} V` : "  Loading battery data..."}
             </Text>
           </View>
           <View style={styles.iconWithText}>
             <MaterialIcons name="solar-power" size={34} color={Colors.YELLOW_LIGHT} />
             <Text style={styles.solarInfo}>
-              {solarData ? `Solar Panel Voltage: ${solarData._value} V` : "Loading solar data..."}
+              {solarData ? `  Solar Panel Voltage: ${solarData._value} V` : "  Loading solar data..."}
             </Text>
           </View>
+        </View>
+        <View style={styles.textSimple}>
           {inverterData && (
-            <Text style={styles.solarInfo}>
-              Inverter: {inverterData[0].InverterName}
-            </Text>
+            <Text style={styles.solarInfo}>Inverter: {inverterData.InverterName}</Text>
           )}
         </View>
-        <Text style={styles.solarInfo2}>Battery Statistics</Text>
-        {/* <View style={styles.card}>
-          <Text>Statistics for the</Text>
-          <Text>Week</Text>
-        </View> */}
+
+        <Text style={styles.batteryInfo2}>Battery Statistics</Text>
+        <FontAwesome name="battery-4" size={60} color={Colors.BLUE} style={styles.batteryInfo2} />
+        {batteryData._value}
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  textSimple: {
+    marginLeft: 30,
+    marginTop: 10,
+  },
   iconWithText: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -95,20 +111,27 @@ const styles = StyleSheet.create({
     fontFamily: 'pop-semibold',
     fontSize: 18,
     color: Colors.BLUE,
-    marginLeft: 10, 
+    marginLeft: 10,
+  },
+  batteryInfo2: {
+    fontFamily: 'pop-semibold',
+    fontSize: 28,
+    color: Colors.BLUE,
+    marginLeft: 30,
+    marginTop: 10,
   },
   solarInfo: {
     fontFamily: 'pop-semibold',
     fontSize: 18,
     color: Colors.YELLOW_LIGHT,
-    marginLeft: 10, 
+    marginLeft: 10,
   },
   solarInfo2: {
     fontFamily: 'pop-semibold',
     fontSize: 18,
     color: Colors.YELLOW_LIGHT,
-    marginTop:20,
-    marginLeft: 40, 
+    marginTop: 20,
+    marginLeft: 40,
   },
   batteryInfo: {
     fontFamily: 'pop-semibold',
@@ -131,7 +154,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     flexDirection: 'column',
-    fontFamily: 'pop-regular'
+    fontFamily: 'pop-regular',
+    justifyContent: 'flex-end',
   },
   card2: {
     marginTop: 20,
@@ -146,7 +170,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    fontFamily: 'pop-regular'
+    fontFamily: 'pop-regular',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   safeArea: {
     marginTop: 30,

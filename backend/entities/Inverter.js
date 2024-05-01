@@ -4,7 +4,16 @@ import { Sequelize } from "sequelize";
 const Inverter = db.define('Inverter', {
     InverterId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        autoIncrement: true,
+        primaryKey: true
+    },
+    UserId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Users', 
+            key: 'UserId' 
+        }
     },
     InverterName: {
         type: Sequelize.STRING,
@@ -16,5 +25,6 @@ const Inverter = db.define('Inverter', {
         defaultValue: Sequelize.NOW
     }
 });
+
 
 export default Inverter;

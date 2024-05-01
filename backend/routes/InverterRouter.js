@@ -20,31 +20,25 @@ inverterRouter.get('/inverter-data', async (req, res) => {
     }
   });
 
-  inverterRouter.get('/validate-inverter', async (req, res) => {
-    const { userId, device_id } = req.query;
-
-    if (!userId || !device_id) {
-        return res.status(400).json({ error: "Missing userId or device_id" });
+  inverterRouter.get('/inverter-data', async (req, res) => {
+    const { userId, deviceId } = req.query;
+    if (!userId || !deviceId) {
+        return res.status(400).json({ error: "Missing parameters" });
     }
 
     try {
         const inverter = await Inverter.findOne({
-            where: { UserId: userId }
+            where: { UserId: userId, DeviceId: deviceId }
         });
 
-        if (!inverter) {
-            return res.status(404).json({ error: "No inverter found for this user" });
+        if (inverter) {
+            res.json(inverter);
+        } else {
+            res.status(404).json({ error: "Inverter not found" });
         }
-
-        // Simplistic check: Assume device_id matches InverterName
-        if (inverter.InverterName !== device_id) {
-            return res.status(403).json({ error: "Inverter and device_id do not match" });
-        }
-
-        res.json({ message: "Inverter validated successfully", inverter });
     } catch (error) {
-        console.error("Error validating inverter:", error);
-        res.status(500).json({ error: 'Failed to validate inverter data' });
+        console.error("Error fetching inverter data:", error);
+        res.status(500).json({ error: 'Failed to retrieve inverter data' });
     }
 });
 
