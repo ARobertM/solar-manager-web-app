@@ -2,7 +2,7 @@ import { InfluxDB } from "@influxdata/influxdb-client";
 import env from 'dotenv';
 
 env.config();
-const url = "http://192.168.1.3:8086";
+const url = process.env.IP_SERVER;
 const token = process.env.INFLUX_TOKEN;
 const org = process.env.INFLUX_ORG;
 const bucket = process.env.INFLUX_BUCKET;

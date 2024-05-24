@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import Colors from '../../assets/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import AddInverterBtn from '../components/AddInverterBtn';
+import NewUpdatesCarousel from '../components/NewUpdatesCarousel';
+import WeatherApp from '../components/WeatherApp';
 
 
 export default function Home({ userId }) {
@@ -21,6 +23,9 @@ export default function Home({ userId }) {
           <Text style={styles.descriptionText}></Text>
 
           <AddInverterBtn userId={userId} />
+          <NewUpdatesCarousel/>
+          <WeatherApp/>
+          
         </View>
       </ScrollView>
     </SafeAreaView>

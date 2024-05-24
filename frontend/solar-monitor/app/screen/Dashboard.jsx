@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from "../../assets/Colors";
 import axios from 'axios';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { LineChart } from 'react-native-chart-kit';
 
 export default function Dashboard({ userId }) {
+  const apiUrl = process.env.EXPO_PUBLIC_IPV4 ;
+  const screenWidth = Dimensions.get("window").width;
+
   const [batteryData, setBatteryData] = useState(null);
   const [solarData, setSolarData] = useState(null);
-  const [batteryPerc, setBatteryPerc] = useState(null);
   const [inverterData, setInverterData] = useState(null);
+  const [batteryPercentage, setBatteryPercentage] = useState(null);
+
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [{
+      data: [],
+      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+      strokeWidth: 2
+    }]
+  });
 
   useEffect(() => {
     const verifyAndFetchData = async () => {
       try {
-        console.log(userId)
         console.log('Sending request with userId:', userId);
-        const res = await axios.get(`http://192.168.1.3:9000/api/inverter-data/${userId}`);
-        console.log(res.data)
-        if (res.data) {
+        const res = await axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/inverter-data/${userId}`);
+        console.log('Inverter data response:', res.data);
+        if (res.data && res.data.inverterData) {
           console.log('Inverter found, fetching real-time data...');
           setInverterData(res.data.inverterData);
-          fetchData();
+          await fetchData(res.data.inverterData);
+          await fetchBatteryData(res.data.inverterData);
         } else {
           console.log('No inverter found for this user.');
           setInverterData(null);
@@ -33,21 +46,83 @@ export default function Dashboard({ userId }) {
       }
     };
 
-    const fetchData = async () => {
+    const fetchData = async (inverterData) => {
+      if (!inverterData) {
+        console.log("No inverter data to fetch");
+        return;
+      }
       try {
-        const [batteryRes, solarRes, batteryPerc] = await Promise.all([
-          axios.get('http://192.168.1.3:9000/api/influxdata-bat-last'),
-          axios.get('http://192.168.1.3:9000/api/influxdata-solp-last'),
-          axios.get('http://192.168.1.3:9000/api/influxdata-batperc-last')
+        const [batteryRes, solarRes, batPercRes] = await Promise.all([
+          axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-bat-last`).catch(error => {
+            console.error("Error fetching battery data:", error);
+            return { data: null };
+          }),
+          axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-solp-last`).catch(error => {
+            console.error("Error fetching solar data:", error);
+            return { data: null };
+          }),
+          axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-batperc-last`).catch(error => {
+            console.error("Error fetching battery percentage data:", error);
+            return { data: null };
+          }),
         ]);
-        setBatteryData(batteryRes.data);
-        setSolarData(solarRes.data);
-        setBatteryPerc(batteryPerc.data);
+        console.log('Battery data response:', batteryRes.data);
+        console.log('Solar data response:', solarRes.data);
+        console.log('Battery percentage response:', batPercRes.data);
+
+        if (batteryRes.data) {
+          setBatteryData(batteryRes.data);
+        } else {
+          console.log('Battery data is null');
+        }
+
+        if (solarRes.data) {
+          setSolarData(solarRes.data);
+        } else {
+          console.log('Solar data is null');
+        }
+
+        if (batPercRes.data) {
+          setBatteryPercentage(batPercRes.data);
+        } else {
+          console.log('Battery percentage data is null');
+        }
+
       } catch (error) {
         console.error("Error fetching real-time data:", error);
         setBatteryData(null);
         setSolarData(null);
-        setBatteryPerc(null);
+        setBatteryPercentage(null);
+      }
+    };
+
+    const fetchBatteryData = async (inverterData) => {
+      if (!inverterData) {
+        console.log("No inverter data to fetch battery data");
+        return;
+      }
+      try {
+        const batteryDataRes = await axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-bat`);
+        const batteryData = batteryDataRes.data;
+        console.log('Historical battery data response:', batteryData);
+        
+        if (batteryData && Array.isArray(batteryData)) {
+          const labels = batteryData.map(item => new Date(item._time).toLocaleDateString());
+          const data = batteryData.map(item => item._value);
+          setChartData({
+            labels,
+            datasets: [{
+              data,
+              color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+              strokeWidth: 2
+            }]
+          });
+        } else {
+          console.log('Historical battery data is null or not an array');
+        }
+
+      } catch (error) {
+        console.error("Error fetching historical battery data:", error);
       }
     };
 
@@ -55,8 +130,15 @@ export default function Dashboard({ userId }) {
 
     const interval = setInterval(verifyAndFetchData, 10000);
     return () => clearInterval(interval);
-  }, [userId]);
+  }, [userId, apiUrl]); 
 
+  useEffect(() => {
+    console.log('Battery Data:', batteryData);
+    console.log('Solar Data:', solarData);
+    console.log('Battery Percentage:', batteryPercentage);
+    console.log('Inverter Data:', inverterData);
+    console.log('Chart Data:', chartData);
+  }, [batteryData, solarData, batteryPercentage, inverterData, chartData]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -66,38 +148,93 @@ export default function Dashboard({ userId }) {
         end={{ x: 0, y: 0 }}
         style={styles.background}
       />
-      <View style={styles.container}>
-        <Text style={styles.welcomeText}>Solis</Text>
-        <Text style={styles.solisText}>Dashboard</Text>
-        <View style={styles.card}>
-          <View style={styles.iconWithText}>
-            <Feather name="battery-charging" size={34} color={Colors.BLUE} />
-            <Text style={styles.batteryInfo}>
-              {batteryData ? `  Battery Voltage: ${batteryData._value} V` : "  Loading battery data..."}
-            </Text>
-          </View>
-          <View style={styles.iconWithText}>
-            <MaterialIcons name="solar-power" size={34} color={Colors.YELLOW_LIGHT} />
-            <Text style={styles.solarInfo}>
-              {solarData ? `  Solar Panel Voltage: ${solarData._value} V` : "  Loading solar data..."}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.textSimple}>
-          {inverterData && (
-            <Text style={styles.solarInfo}>Inverter: {inverterData.InverterName}</Text>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.welcomeText}>Solis</Text>
+          <Text style={styles.solisText}>Dashboard</Text>
+          {inverterData ? (
+            <>
+              <View style={styles.card}>
+                <View style={styles.iconWithText}>
+                  <Feather name="battery-charging" size={34} color={Colors.BLUE} />
+                  <Text style={styles.batteryInfo}>
+                    {batteryData ? `  Battery Voltage: ${batteryData._value} V` : "  Loading battery data..."}
+                  </Text>
+                </View>
+                <View style={styles.iconWithText}>
+                  <MaterialIcons name="solar-power" size={34} color={Colors.YELLOW_LIGHT} />
+                  <Text style={styles.solarInfo}>
+                    {solarData ? `  Solar Panel Voltage: ${solarData._value} V` : "  Loading solar data..."}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.textSimple}>
+                <Text style={styles.solarInfo}>Inverter: {inverterData.InverterName}</Text>
+              </View>
+
+              <Text style={styles.batteryInfo2}>Battery Statistics</Text>
+              <View style={styles.batteryContainer}>
+                <FontAwesome name="battery-4" size={60} color={Colors.BLUE} style={styles.batteryIcon} />
+                <Text style={styles.batteryText}>
+                  {batteryPercentage ? `${batteryPercentage._value} %` : "Loading battery percentage..."}
+                </Text>
+              </View>
+              {chartData.labels.length > 0 && chartData.datasets[0].data.length > 0 ? (
+                <LineChart
+                  data={chartData}
+                  width={screenWidth - 40}
+                  height={220}
+                  verticalLabelRotation={30}
+                  chartConfig={{
+                    backgroundColor: '#e26a00',
+                    backgroundGradientFrom: '#fb8c00',
+                    backgroundGradientTo: '#ffa726',
+                    decimalPlaces: 2,
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    style: {
+                      borderRadius: 16
+                    },
+                    propsForDots: {
+                      r: "6",
+                      strokeWidth: "2",
+                      stroke: "#ffa726"
+                    }
+                  }}
+                  bezier
+                  style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                  }}
+                />
+              ) : (
+                <Text style={styles.loadingText}>Loading chart data...</Text>
+              )}
+            </>
+          ) : (
+            <Text style={styles.noInverterText}>No inverter data available. Please add an inverter.</Text>
           )}
         </View>
-
-        <Text style={styles.batteryInfo2}>Battery Statistics</Text>
-        <FontAwesome name="battery-4" size={60} color={Colors.BLUE} style={styles.batteryInfo2} />
-        {batteryData._value}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  batteryContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    marginLeft: 30,
+  },
+  batteryIcon: {
+    marginRight: 10,
+  },
+  batteryText: {
+    fontFamily: 'pop-semibold',
+    fontSize: 28,
+    color: Colors.BLUE,
+  },
   textSimple: {
     marginLeft: 30,
     marginTop: 10,
@@ -133,16 +270,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 40,
   },
-  batteryInfo: {
-    fontFamily: 'pop-semibold',
-    fontSize: 23,
-    color: Colors.BLUE
-  },
-  solarInfo: {
-    fontFamily: 'pop-semibold',
-    fontSize: 23,
-    color: Colors.YELLOW_LIGHT
-  },
   card: {
     marginTop: 20,
     padding: 20,
@@ -156,23 +283,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     fontFamily: 'pop-regular',
     justifyContent: 'flex-end',
-  },
-  card2: {
-    marginTop: 20,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    fontFamily: 'pop-regular',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
   },
   safeArea: {
     marginTop: 30,
@@ -191,13 +301,29 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontFamily: 'pop-semibold',
     fontSize: 23,
-    color: Colors.BLUE
+    color: Colors.BLUE,
   },
   solisText: {
     fontFamily: 'pop-semibold',
     fontSize: 40,
     marginTop: -20,
     marginLeft: 20,
-    color: Colors.YELLOW_LIGHT
-  }
+    color: Colors.YELLOW_LIGHT,
+  },
+  noInverterText: {
+    fontFamily: 'pop-regular',
+    fontSize: 18,
+    color: Colors.RED,
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  loadingText: {
+    fontFamily: 'pop-regular',
+    fontSize: 18,
+    color: Colors.GRAY,
+    textAlign: 'center',
+    marginTop: 20,
+  },
 });
+
+``

@@ -3,7 +3,6 @@ import { Animated } from 'react-native';
 import Colors from '../../assets/Colors'; 
 
 const TabBarIcon = ({ name, library: IconLibrary, focused }) => {
-    // Acesta va controla factorul de scalare, nu dimensiunea directă a iconiței.
     const scaleAnim = useRef(new Animated.Value(focused ? 1.1 : 1)).current; 
     const color = focused ? Colors.BLUE : Colors.YELLOW_LIGHT;
 

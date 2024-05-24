@@ -7,6 +7,8 @@ import axios from 'axios'
 import { useNavigation } from '@react-navigation/native';
 
 export default function AddInverter({ route }) {
+
+  const apiUrl = process.env.EXPO_PUBLIC_IPV4;
   const navigation = useNavigation();
   const { userId } = route.params;
   const [hasPermission, setHasPermission] = useState(null);
@@ -31,7 +33,7 @@ export default function AddInverter({ route }) {
       const date = parts[2];
  
 
-      const response = await axios.post('http://192.168.1.3:9000/api/register/inverter', {
+      const response = await axios.post(`https://d9a1-193-226-62-129.ngrok-free.app/api/register/inverter`, {
         "UserId": userId, 
         "InverterId": id,
         "InverterName": name,

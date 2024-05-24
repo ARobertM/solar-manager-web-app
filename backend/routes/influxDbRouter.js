@@ -48,6 +48,25 @@ influxRouter.get('/influxdata-solp', (req, res) => {
   });
 });
 
+influxRouter.get('/influxdata-bat', (req, res) => {
+  const days = 1;
+
+  queryApi.queryRows(fluxQuery1(days), {
+    next(row, tableMeta) {
+      const o = tableMeta.toObject(row);
+      console.log(o);
+    },
+    error(error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to retrieve data' });
+    },
+    complete() {
+      console.log('Completed');
+      res.status(200).send('Data retrieved successfully');
+    },
+  });
+});
+
 influxRouter.get('/influxdata-solp-last', (req, res) => {
   let lastData = null;
 
