@@ -29,7 +29,7 @@ export default function Dashboard({ userId }) {
     const verifyAndFetchData = async () => {
       try {
         console.log('Sending request with userId:', userId);
-        const res = await axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/inverter-data/${userId}`);
+        const res = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/inverter-data/${userId}`);
         console.log('Inverter data response:', res.data);
         if (res.data && res.data.inverterData) {
           console.log('Inverter found, fetching real-time data...');
@@ -93,7 +93,7 @@ export default function Dashboard({ userId }) {
         return;
       }
       try {
-        const batteryDataRes = await axios.get(`http://${apiUrl}:9000/api/influxdata-bat`);
+        const batteryDataRes = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/influxdata-bat`);
         const batteryData = batteryDataRes.data;
         console.log('Historical battery data response:', batteryData);
         

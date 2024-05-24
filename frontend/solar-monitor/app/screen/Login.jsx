@@ -16,7 +16,7 @@ export default function Login(props) {
       //pentru testare emulator : localhost+port
       //pentru testare android fizic : ip+port: 192.168.0.101:9000
       //TO:DO de rezolvat faza cu IP-ul
-        const response = await axios.post(`https://d9a1-193-226-62-129.ngrok-free.app/api/login`, {
+        const response = await axios.post(`https://awfully-correct-doe.ngrok-free.app/api/login`, {
             UserEmail: email,
             UserPassword: password
         });

@@ -32,8 +32,8 @@ export default function AddInverter({ route }) {
       const name = parts[1];
       const date = parts[2];
  
-
-      const response = await axios.post(`https://d9a1-193-226-62-129.ngrok-free.app/api/register/inverter`, {
+      // ngrock + port 9000 https://awfully-correct-doe.ngrok-free.app
+      const response = await axios.post(`https://awfully-correct-doe.ngrok-free.app/api/register/inverter`, {
         "UserId": userId, 
         "InverterId": id,
         "InverterName": name,

@@ -29,7 +29,7 @@ export default function Dashboard({ userId }) {
     const verifyAndFetchData = async () => {
       try {
         console.log('Sending request with userId:', userId);
-        const res = await axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/inverter-data/${userId}`);
+        const res = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/inverter-data/${userId}`);
         console.log('Inverter data response:', res.data);
         if (res.data && res.data.inverterData) {
           console.log('Inverter found, fetching real-time data...');
@@ -53,15 +53,15 @@ export default function Dashboard({ userId }) {
       }
       try {
         const [batteryRes, solarRes, batPercRes] = await Promise.all([
-          axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-bat-last`).catch(error => {
+          axios.get(`https://awfully-correct-doe.ngrok-free.app/api/influxdata-bat-last`).catch(error => {
             console.error("Error fetching battery data:", error);
             return { data: null };
           }),
-          axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-solp-last`).catch(error => {
+          axios.get(`https://awfully-correct-doe.ngrok-free.app/api/influxdata-solp-last`).catch(error => {
             console.error("Error fetching solar data:", error);
             return { data: null };
           }),
-          axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-batperc-last`).catch(error => {
+          axios.get(`https://awfully-correct-doe.ngrok-free.app/api/influxdata-batperc-last`).catch(error => {
             console.error("Error fetching battery percentage data:", error);
             return { data: null };
           }),
@@ -102,7 +102,7 @@ export default function Dashboard({ userId }) {
         return;
       }
       try {
-        const batteryDataRes = await axios.get(`https://d9a1-193-226-62-129.ngrok-free.app/api/influxdata-bat`);
+        const batteryDataRes = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/influxdata-bat`);
         const batteryData = batteryDataRes.data;
         console.log('Historical battery data response:', batteryData);
         
