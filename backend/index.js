@@ -10,6 +10,8 @@ import batterymRouter from './routes/BatteryRouter.js';
 import solarPanelmRouter from './routes/SolarPanelRouter.js';
 
 
+
+
 let app = express();
 
 env.config();

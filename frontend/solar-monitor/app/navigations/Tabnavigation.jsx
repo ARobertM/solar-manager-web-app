@@ -32,6 +32,16 @@ export default function Tabnavigation({ route }) {
         }
       }}
     >
+      <Tab.Screen name="Home"
+      options={{
+        tabBarLabel: 'Home',
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon name="home" library={FontAwesome5} focused={focused} />
+        ),
+      }}>
+        {() => <Home userId={userId} />}
+      </Tab.Screen>
       <Tab.Screen
         name="Notification"
         component={Notification}
@@ -43,16 +53,7 @@ export default function Tabnavigation({ route }) {
           ),
         }}
       />
-      <Tab.Screen name="Home"
-      options={{
-        tabBarLabel: 'Home',
-        tabBarShowLabel: false,
-        tabBarIcon: ({ focused }) => (
-          <TabBarIcon name="home" library={FontAwesome5} focused={focused} />
-        ),
-      }}>
-        {() => <Home userId={userId} />}
-      </Tab.Screen>
+      
       <Tab.Screen
     name="Dashboard"
     options={{

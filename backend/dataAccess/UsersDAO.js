@@ -2,7 +2,7 @@ import Users from "../entities/Users.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 
-const secretKey = 'secret_key';
+const secretKey = 'exposecret';
 
 async function createUser({ UserName, UserEmail, UserPassword }) {
     try {

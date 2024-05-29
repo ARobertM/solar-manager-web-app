@@ -70,8 +70,8 @@ const WeatherForecast = ({ latitude, longitude }) => {
             <Carousel
                 data={forecastData.list.filter(item => new Date(item.dt_txt).getHours() === 12)}
                 renderItem={renderForecastItem}
-                sliderWidth={viewportWidth - 60} // Ajustăm sliderWidth pentru a include marginile
-                itemWidth={viewportWidth * 0.65} // Ajustăm lățimea cardurilor
+                sliderWidth={viewportWidth - 60} 
+                itemWidth={viewportWidth * 0.65} 
                 keyExtractor={item => item.dt_txt}
                 containerCustomStyle={styles.carouselContainer}
                 contentContainerCustomStyle={styles.carouselContentContainer}

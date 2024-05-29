@@ -72,10 +72,10 @@ export default function Login(props) {
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin} >
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.googleButton}>
+        {/* <TouchableOpacity style={styles.googleButton}>
           <AntDesign name="google" size={24} color="white" />
           <Text style={styles.buttonText}>Log In with Google</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.createAccount} onPress= {() => props.navigation.navigate('SignIn') }>
         <Text style={styles.createAccountText}>Create one if you don't have an account</Text>

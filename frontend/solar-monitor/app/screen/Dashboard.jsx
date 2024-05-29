@@ -6,6 +6,9 @@ import axios from 'axios';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
+import SolarVoltageChart from '../components/SolarDataChart';
+import BatteryVoltageChart from '../components/BatteryDataChart';
+import BatteryVoltageStatsPieChart from '../components/BatteryVoltageStatsPieChart';
 
 export default function Dashboard({ userId }) {
   const apiUrl = process.env.EXPO_PUBLIC_IPV4 ;
@@ -28,11 +31,11 @@ export default function Dashboard({ userId }) {
   useEffect(() => {
     const verifyAndFetchData = async () => {
       try {
-        console.log('Sending request with userId:', userId);
+        // console.log('Sending request with userId:', userId);
         const res = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/inverter-data/${userId}`);
-        console.log('Inverter data response:', res.data);
+        // console.log('Inverter data response:', res.data);
         if (res.data && res.data.inverterData) {
-          console.log('Inverter found, fetching real-time data...');
+          // console.log('Inverter found, fetching real-time data...');
           setInverterData(res.data.inverterData);
           await fetchData(res.data.inverterData);
           await fetchBatteryData(res.data.inverterData);
@@ -48,7 +51,7 @@ export default function Dashboard({ userId }) {
 
     const fetchData = async (inverterData) => {
       if (!inverterData) {
-        console.log("No inverter data to fetch");
+        // console.log("No inverter data to fetch");
         return;
       }
       try {
@@ -66,9 +69,9 @@ export default function Dashboard({ userId }) {
             return { data: null };
           }),
         ]);
-        console.log('Battery data response:', batteryRes.data);
-        console.log('Solar data response:', solarRes.data);
-        console.log('Battery percentage response:', batPercRes.data);
+        // console.log('Battery data response:', batteryRes.data);
+        // console.log('Solar data response:', solarRes.data);
+        // console.log('Battery percentage response:', batPercRes.data);
 
         if (batteryRes.data) {
           setBatteryData(batteryRes.data);
@@ -98,13 +101,13 @@ export default function Dashboard({ userId }) {
 
     const fetchBatteryData = async (inverterData) => {
       if (!inverterData) {
-        console.log("No inverter data to fetch battery data");
+        // console.log("No inverter data to fetch battery data");
         return;
       }
       try {
         const batteryDataRes = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/influxdata-bat`);
         const batteryData = batteryDataRes.data;
-        console.log('Historical battery data response:', batteryData);
+        // console.log('Historical battery data response:', batteryData);
         
         if (batteryData && Array.isArray(batteryData)) {
           const labels = batteryData.map(item => new Date(item._time).toLocaleDateString());
@@ -118,11 +121,11 @@ export default function Dashboard({ userId }) {
             }]
           });
         } else {
-          console.log('Historical battery data is null or not an array');
+          // console.log('Historical battery data is null or not an array');
         }
 
       } catch (error) {
-        console.error("Error fetching historical battery data:", error);
+        // console.error("Error fetching historical battery data:", error);
       }
     };
 
@@ -133,11 +136,11 @@ export default function Dashboard({ userId }) {
   }, [userId, apiUrl]); 
 
   useEffect(() => {
-    console.log('Battery Data:', batteryData);
-    console.log('Solar Data:', solarData);
-    console.log('Battery Percentage:', batteryPercentage);
-    console.log('Inverter Data:', inverterData);
-    console.log('Chart Data:', chartData);
+    // console.log('Battery Data:', batteryData);
+    // console.log('Solar Data:', solarData);
+    // console.log('Battery Percentage:', batteryPercentage);
+    // console.log('Inverter Data:', inverterData);
+    // console.log('Chart Data:', chartData);
   }, [batteryData, solarData, batteryPercentage, inverterData, chartData]);
 
   return (
@@ -179,42 +182,15 @@ export default function Dashboard({ userId }) {
                   {batteryPercentage ? `${batteryPercentage._value} %` : "Loading battery percentage..."}
                 </Text>
               </View>
-              {chartData.labels.length > 0 && chartData.datasets[0].data.length > 0 ? (
-                <LineChart
-                  data={chartData}
-                  width={screenWidth - 40}
-                  height={220}
-                  verticalLabelRotation={30}
-                  chartConfig={{
-                    backgroundColor: '#e26a00',
-                    backgroundGradientFrom: '#fb8c00',
-                    backgroundGradientTo: '#ffa726',
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    style: {
-                      borderRadius: 16
-                    },
-                    propsForDots: {
-                      r: "6",
-                      strokeWidth: "2",
-                      stroke: "#ffa726"
-                    }
-                  }}
-                  bezier
-                  style={{
-                    marginVertical: 8,
-                    borderRadius: 16
-                  }}
-                />
-              ) : (
-                <Text style={styles.loadingText}>Loading chart data...</Text>
-              )}
+              <BatteryVoltageStatsPieChart/>
+              <SolarVoltageChart/>
+              <BatteryVoltageChart/>
             </>
           ) : (
             <Text style={styles.noInverterText}>No inverter data available. Please add an inverter.</Text>
           )}
         </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
@@ -326,4 +302,3 @@ const styles = StyleSheet.create({
   },
 });
 
-``

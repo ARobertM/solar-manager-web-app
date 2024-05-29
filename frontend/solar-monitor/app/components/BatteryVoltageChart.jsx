@@ -11,7 +11,7 @@ const BatteryVoltageChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://192.168.1.3:9000/api/influxdata-bat');
+        const res = await axios.get('https://awfully-correct-doe.ngrok-free.app/api/influxdata-bat');
         const data = res.data;
         const chartData = {
           labels: data.map(entry => entry._time),
