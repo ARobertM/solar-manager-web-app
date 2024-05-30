@@ -36,6 +36,12 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cc67e23b-17bd-4109-ba7f-d57d12e32e77"
+      }
+    },
+    "owner": "robertlicenta"
   }
 }
