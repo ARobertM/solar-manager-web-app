@@ -70,8 +70,8 @@ const WeatherForecast = ({ latitude, longitude }) => {
             <Carousel
                 data={forecastData.list.filter(item => new Date(item.dt_txt).getHours() === 12)}
                 renderItem={renderForecastItem}
-                sliderWidth={viewportWidth - 60} 
-                itemWidth={viewportWidth * 0.65} 
+                sliderWidth={viewportWidth - 60}
+                itemWidth={viewportWidth * 0.65}
                 keyExtractor={item => item.dt_txt}
                 containerCustomStyle={styles.carouselContainer}
                 contentContainerCustomStyle={styles.carouselContentContainer}
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: '#fff',
-        marginHorizontal: 20, 
+        marginHorizontal: 20,
     },
     header: {
         fontSize: 24,
@@ -180,7 +180,7 @@ const appStyles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 10,
         borderRadius: 20,
-        marginTop: 20,
+        marginTop: 40,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,

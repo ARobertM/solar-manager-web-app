@@ -2,9 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import Login from './app/screen/Login';
-import { Input } from '@rneui/themed';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './app/screen/SignIn';
@@ -25,24 +24,34 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
+      console.log('Fonts loaded or font error:', fontsLoaded, fontError);
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
 
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      onLayoutRootView();
+    }
+  }, [fontsLoaded, fontError]);
+
   if (!fontsLoaded && !fontError) {
+    console.log('Fonts not loaded yet');
     return null;
   }
+
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
-        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='SignIn' component={SignIn} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
-        <Stack.Screen name='Tabnavigation' component={Tabnavigation} options={{ headerShown: false }} />
-        <Stack.Screen name='AddInverter'component={AddInverter}options={{headerShown:false}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Login'>
+          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name='SignIn' component={SignIn} options={{ headerShown: false }} />
+          <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name='Tabnavigation' component={Tabnavigation} options={{ headerShown: false }} />
+          <Stack.Screen name='AddInverter' component={AddInverter} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
     </View>
   );
 }
