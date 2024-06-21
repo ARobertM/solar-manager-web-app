@@ -3,6 +3,7 @@
 ## Overview
 
 The Solar Manager Web App is an advanced solution for monitoring and managing solar energy systems. It leverages modern technologies to provide real-time data visualization, performance analytics, and alerts, ensuring optimal performance and maintenance of solar installations.
+![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/e9b7ebc6-933e-47a8-a61a-39e4403389df)
 
 ## Features
 
@@ -15,21 +16,18 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
 ## Tech Stack
 
 - **Frontend**: 
-  - ![JavaScript](https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png) JavaScript
-  - ![React.js](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg) React.js
-  - ![React Native](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg) React Native
-  - ![Expo](https://upload.wikimedia.org/wikipedia/commons/3/3b/Expo-Logo.svg) Expo
+  - ![JavaScript](https://github.com/tandpfun/skill-icons/raw/main/icons/JavaScript.svg) JavaScript
+  - ![React](https://github.com/tandpfun/skill-icons/raw/main/icons/React-Light.svg) React.js
+  - ![React Native](https://github.com/tandpfun/skill-icons/raw/main/icons/React-Light.svg) React Native
+  - ![Expo](https://github.com/tandpfun/skill-icons/raw/main/icons/Expo-Dark.svg) Expo
 - **Backend**:
-  - ![Node.js](https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg) Node.js
-  - ![Express.js](https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png) Express.js
+  - ![Node.js](https://github.com/tandpfun/skill-icons/raw/main/icons/NodeJS-Dark.svg) Node.js
+  - ![Express.js](https://github.com/tandpfun/skill-icons/raw/main/icons/ExpressJS-Light.svg) Express.js
 - **Databases**: 
-  - ![InfluxDB](https://upload.wikimedia.org/wikipedia/commons/c/c9/Influxdb_logo.svg) InfluxDB (Time series data)
-  - ![MariaDB](https://upload.wikimedia.org/wikipedia/commons/9/9e/Mariadb-seal-shaded-browntext.svg) MariaDB (Relational data)
+  - ![InfluxDB](https://github.com/tandpfun/skill-icons/raw/main/icons/InfluxDB-Dark.svg) InfluxDB (Time series data)
+  - ![MariaDB](https://github.com/tandpfun/skill-icons/raw/main/icons/MariaDB-Dark.svg) MariaDB (Relational data)
 - **Hardware**:
-  - ![Arduino](https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg) Arduino (for data collection from solar panels)
-
-![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/c0611672-2530-4a75-b2b8-cf1c6a93d110)
-
+  - ![Arduino](https://github.com/tandpfun/skill-icons/raw/main/icons/Arduino.svg) Arduino (for data collection from solar panels)
 
 ## Installation
 
@@ -92,7 +90,7 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
 
 ## Usage
 
-- Open your browser and go to `http://localhost:3000` to access the web app.
+- Open your browser and go to `http://localhost:8046` to access the web app.
 - Use the dashboard to monitor and manage your solar energy system.
 - Use the mobile app to monitor your system on the go.
 
