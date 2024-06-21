@@ -29,11 +29,8 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
   - Arduino (for data collection from solar panels)
 ## Screenshots
 
-![WhatsApp Image 2024-05-26 at 20 14 18_4445aeba](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/193e27a7-accb-48a6-a129-ba7f3d892685)
-![WhatsApp Image 2024-05-26 at fgf20 07 38_a2933779](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/c539a5d0-1653-4dae-ad90-0d538613365f)
-![WhatsApp Image 2024-05-26 at 20 07 37_b48b796d](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/82b7c5a2-fe05-4df3-9a20-e6a6d0377a80)
-![Screenshot_1717335577](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/ed9c34bb-13ba-45dc-83be-718894763229)
-![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/f3045872-31a3-4568-8273-6c1e1b433483)
+
+![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/9c4d079f-46aa-4824-a746-b0a0d5cf4609)
 
 
 
@@ -98,7 +95,7 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
 
 ## Usage
 
-- Open your browser and go to `http://localhost:3000` to access the web app.
+- Open your browser and go to `http://localhost:8084` to access the web app.
 - Use the dashboard to monitor and manage your solar energy system.
 - Use the mobile app to monitor your system on the go.
 
