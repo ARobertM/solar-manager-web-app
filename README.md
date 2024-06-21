@@ -15,23 +15,20 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
 ## Tech Stack
 
 - **Frontend**: 
-  - JavaScript
-  - React.js
-  - React Native
-  - Expo
+  - ![JavaScript](https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png) JavaScript
+  - ![React.js](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg) React.js
+  - ![React Native](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg) React Native
+  - ![Expo](https://upload.wikimedia.org/wikipedia/commons/3/3b/Expo-Logo.svg) Expo
 - **Backend**:
-  - Node.js
-  - Express.js
+  - ![Node.js](https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg) Node.js
+  - ![Express.js](https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png) Express.js
 - **Databases**: 
-  - InfluxDB (Time series data)
-  - MariaDB (Relational data)
+  - ![InfluxDB](https://upload.wikimedia.org/wikipedia/commons/c/c9/Influxdb_logo.svg) InfluxDB (Time series data)
+  - ![MariaDB](https://upload.wikimedia.org/wikipedia/commons/9/9e/Mariadb-seal-shaded-browntext.svg) MariaDB (Relational data)
 - **Hardware**:
-  - Arduino (for data collection from solar panels)
-## Screenshots
+  - ![Arduino](https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg) Arduino (for data collection from solar panels)
 
-
-![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/9c4d079f-46aa-4824-a746-b0a0d5cf4609)
-
+![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/c0611672-2530-4a75-b2b8-cf1c6a93d110)
 
 
 ## Installation
@@ -95,7 +92,7 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
 
 ## Usage
 
-- Open your browser and go to `http://localhost:8084` to access the web app.
+- Open your browser and go to `http://localhost:3000` to access the web app.
 - Use the dashboard to monitor and manage your solar energy system.
 - Use the mobile app to monitor your system on the go.
 
@@ -110,8 +107,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For any questions or suggestions, please contact [ARobertM](https://github.com/ARobertM).
-
-
 
 ---
 
