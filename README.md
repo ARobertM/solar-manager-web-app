@@ -3,7 +3,8 @@
 ## Overview
 
 The Solar Manager Web App is an advanced solution for monitoring and managing solar energy systems. It leverages modern technologies to provide real-time data visualization, performance analytics, and alerts, ensuring optimal performance and maintenance of solar installations.
-![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/e9b7ebc6-933e-47a8-a61a-39e4403389df)
+
+![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/99e4d550-4b7b-4ad9-be98-ae1579bdefe1)
 
 ## Features
 
@@ -15,19 +16,22 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
 
 ## Tech Stack
 
-- **Frontend**: 
-  - ![JavaScript](https://github.com/tandpfun/skill-icons/raw/main/icons/JavaScript.svg) JavaScript
-  - ![React](https://github.com/tandpfun/skill-icons/raw/main/icons/React-Light.svg) React.js
-  - ![React Native](https://github.com/tandpfun/skill-icons/raw/main/icons/React-Light.svg) React Native
-  - ![Expo](https://github.com/tandpfun/skill-icons/raw/main/icons/Expo-Dark.svg) Expo
-- **Backend**:
-  - ![Node.js](https://github.com/tandpfun/skill-icons/raw/main/icons/NodeJS-Dark.svg) Node.js
-  - ![Express.js](https://github.com/tandpfun/skill-icons/raw/main/icons/ExpressJS-Light.svg) Express.js
-- **Databases**: 
-  - ![InfluxDB](https://github.com/tandpfun/skill-icons/raw/main/icons/InfluxDB-Dark.svg) InfluxDB (Time series data)
-  - ![MariaDB](https://github.com/tandpfun/skill-icons/raw/main/icons/MariaDB-Dark.svg) MariaDB (Relational data)
-- **Hardware**:
-  - ![Arduino](https://github.com/tandpfun/skill-icons/raw/main/icons/Arduino.svg) Arduino (for data collection from solar panels)
+### Frontend
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/JavaScript.svg" alt="JavaScript" width="42" height="42"/> JavaScript
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/React-Light.svg" alt="React" width="42" height="42"/> React.js
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/React-Light.svg" alt="React Native" width="42" height="42"/> React Native
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/Expo-Dark.svg" alt="Expo" width="42" height="42"/> Expo
+
+### Backend
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/NodeJS-Dark.svg" alt="Node.js" width="42" height="42"/> Node.js
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/ExpressJS-Light.svg" alt="Express.js" width="42" height="42"/> Express.js
+
+### Databases
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/InfluxDB-Dark.svg" alt="InfluxDB" width="42" height="42"/> InfluxDB (Time series data)
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/MariaDB-Dark.svg" alt="MariaDB" width="42" height="42"/> MariaDB (Relational data)
+
+### Hardware
+- <img src="https://github.com/tandpfun/skill-icons/raw/main/icons/Arduino.svg" alt="Arduino" width="42" height="42"/> Arduino (for data collection from solar panels)
 
 ## Installation
 
@@ -105,6 +109,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For any questions or suggestions, please contact [ARobertM](https://github.com/ARobertM).
+armihai1664@gmail.com
 
 ---
 
