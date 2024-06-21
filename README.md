@@ -29,11 +29,12 @@ The Solar Manager Web App is an advanced solution for monitoring and managing so
   - Arduino (for data collection from solar panels)
 ## Screenshots
 
-![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/51a9f991-106e-49ee-85e7-fe61771828b4)
-![WhatsApp Image 2024-05-26 at 20 07 37_b48b796d](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/2d978f96-3a5c-4e07-a9c4-bb8c5e0db9f1)
-![WhatsApp Image 2024-05-26 at fgf20 07 38_a2933779](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/b3698a23-9cf3-4854-9af8-3aff82768cad)
-![WhatsApp Image 2024-05-29 rrrat 11 18 53_da4bb500](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/47b6eafb-2c42-41af-b32a-dcf411342192)
-![Screenshot_1717335577](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/68f542ca-6293-4ac7-849e-cb6cb8d6fd0e)
+![WhatsApp Image 2024-05-26 at 20 14 18_4445aeba](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/193e27a7-accb-48a6-a129-ba7f3d892685)
+![WhatsApp Image 2024-05-26 at fgf20 07 38_a2933779](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/c539a5d0-1653-4dae-ad90-0d538613365f)
+![WhatsApp Image 2024-05-26 at 20 07 37_b48b796d](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/82b7c5a2-fe05-4df3-9a20-e6a6d0377a80)
+![Screenshot_1717335577](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/ed9c34bb-13ba-45dc-83be-718894763229)
+![WhatsApp Image 2024-05-29 at 14 07 19_f1d92806](https://github.com/ARobertM/solar-manager-web-app/assets/111703172/f3045872-31a3-4568-8273-6c1e1b433483)
+
 
 
 ## Installation
