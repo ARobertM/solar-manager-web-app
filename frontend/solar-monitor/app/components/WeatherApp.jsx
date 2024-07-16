@@ -5,6 +5,8 @@ import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import Colors from '../../assets/Colors';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+
 
 const { width: viewportWidth } = Dimensions.get('window');
 

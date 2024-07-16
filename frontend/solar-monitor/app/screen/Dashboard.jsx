@@ -31,11 +31,11 @@ export default function Dashboard({ userId }) {
   useEffect(() => {
     const verifyAndFetchData = async () => {
       try {
-        // console.log('Sending request with userId:', userId);
+      
         const res = await axios.get(`https://awfully-correct-doe.ngrok-free.app/api/inverter-data/${userId}`);
-        // console.log('Inverter data response:', res.data);
+        
         if (res.data && res.data.inverterData) {
-          // console.log('Inverter found, fetching real-time data...');
+          
           setInverterData(res.data.inverterData);
           await fetchData(res.data.inverterData);
           await fetchBatteryData(res.data.inverterData);
@@ -121,11 +121,11 @@ export default function Dashboard({ userId }) {
             }]
           });
         } else {
-          // console.log('Historical battery data is null or not an array');
+          
         }
 
       } catch (error) {
-        // console.error("Error fetching historical battery data:", error);
+        
       }
     };
 

@@ -58,12 +58,13 @@ const BatteryVoltageStatsCards = () => {
                 <Text style={styles.cardTitle}>Mean</Text>
                 <Text style={styles.cardValue}>{stats.mean}</Text>
               </View>
-            </View>
+            {/* </View> 
             <View style={styles.statPair}>
               <View style={[styles.statCard, styles.blueCard]}>
                 <Text style={styles.cardTitle}>StdDev</Text>
                 <Text style={styles.cardValue}>{stats.stddev}</Text>
               </View>
+              */}
             </View>
           </View>
         </View>

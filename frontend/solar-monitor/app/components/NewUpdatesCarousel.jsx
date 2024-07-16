@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 
 const image1 = require('../../assets/solarPanelpoza.jpg');
 const image2 = require('../../assets/orangeButYellowMore.jpg');
@@ -64,6 +66,10 @@ const NewUpdatesCarousel = () => {
       </View>
     </View>
   );
+};
+
+NewUpdatesCarousel.propTypes = {
+  style: ViewPropTypes.style,
 };
 
 const styles = StyleSheet.create({

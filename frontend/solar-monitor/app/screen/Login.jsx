@@ -4,6 +4,7 @@ import Colors from '../../assets/Colors'
 import { Input } from '@rneui/themed';
 import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import axios from 'axios'
 
 export default function Login(props) {
